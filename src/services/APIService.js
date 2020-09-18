@@ -19,11 +19,12 @@ export default {
     apiClient.defaults.headers["Authorization"] = "Bearer " + token;
     return apiClient
       .get("/api/v1/authorized")
-      .then(() => {
+      .then(scopes => {
         localStorage.setItem(
           LOCALSTORAGE_NAME,
           JSON.stringify({
-            authdata: window.btoa(token)
+            authdata: window.btoa(token),
+            scopes: scopes.data.toString()
           })
         );
         return true;
@@ -35,6 +36,7 @@ export default {
   },
   logout() {
     localStorage.removeItem(LOCALSTORAGE_NAME);
+    simpleClient.get("/auth/logout"); // should NOT be GET!
     return new Promise(function(resolve) {
       resolve("Logged out.");
     });
@@ -149,5 +151,8 @@ export default {
   },
   syncRepo() {
     return apiClient.post("/api/v1/bulk/cas/sync/repo");
+  },
+  getLoginUri() {
+    return simpleClient.get("/auth/login");
   }
 };

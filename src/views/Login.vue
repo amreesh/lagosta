@@ -22,6 +22,11 @@
                   $t("login.signin")
                 }}</el-button>
               </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="loginWithProvider" v-loading="loading">
+                  Login with Provider
+                </el-button>
+              </el-form-item>
             </el-form>
           </div>
         </el-card>
@@ -44,6 +49,7 @@
 <script>
 import router from "../router";
 import APIService from "@/services/APIService.js";
+// import * as ClientOAuth2 from "client-oauth2";
 
 export default {
   data() {
@@ -83,6 +89,26 @@ export default {
   },
   created() {
     this.returnUrl = this.$route.query.returnUrl || "/";
+    if (this.$route.query.token) {
+      this.form.token = this.$route.query.token;
+      this.login();
+    }
+    // this.githubAuth = new ClientOAuth2({
+    //   clientId: 'ee111e6067e9a271cdb3',
+    //   // clientSecret: '*****',
+    //   // accessTokenUri: 'https://github.com/login/oauth/access_token',
+    //   authorizationUri: 'https://github.com/login/oauth/authorize',
+    //   redirectUri: 'https://localhost:3000/auth/github/callback',
+    //   scopes: ["read:user"]
+    // });
+    // this.githubAuth.code.getToken(window.location)
+    // .then(function (user) {
+    //   console.log("XIMON: OKAY");
+    //   console.log(user);
+    // })
+    // .catch(e => {
+    //   console.log("XIMON: ERROR: " + e);
+    // });
   },
   methods: {
     login() {
@@ -108,6 +134,14 @@ export default {
           return false;
         }
       });
+    },
+    loginWithProvider() {
+        APIService.getLoginUri().then(response => {
+          window.location.href = response.data;
+        })
+        .catch(e => {
+          console.log("Error fetching login URI: " + e)
+        });
     }
   }
 };

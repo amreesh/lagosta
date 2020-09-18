@@ -35,7 +35,7 @@
         <el-row>
           <el-col :span="12">
             &copy; {{ new Date().getFullYear() }} Stichting NLnet Labs
-            <span v-if="krillVersion !== ''" :title="krillStarted"> - Krill v{{ krillVersion }}</span
+            <span v-if="krillVersion !== ''" :title="krillStarted"> - Krill v{{ krillVersion }} [user: {{this.user.scopes}}]</span
             >
 
             <el-tooltip
@@ -169,6 +169,7 @@ export default {
             moment(stats.data.started * 1000).format("MMMM Do YYYY, h:mm:ss a");
         }
       });
+
     },
     loadUser() {
       this.user = JSON.parse(localStorage.getItem(LOCALSTORAGE_NAME));
