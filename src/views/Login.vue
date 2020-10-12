@@ -138,12 +138,12 @@ export default {
       });
     },
     loginWithProvider() {
-        APIService.getLoginUri().then(response => {
-          window.location.href = response.data;
-        })
-        .catch(e => {
-          console.log("Error fetching login URI: " + e)
-        });
+      APIService.getLoginUri().then(response => {
+        window.location.href = response.data;
+      })
+      .catch(e => {
+        console.log("Error fetching login URI: " + e)
+      });
     }
   }
 };

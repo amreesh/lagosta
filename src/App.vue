@@ -175,9 +175,12 @@ export default {
       this.user = JSON.parse(localStorage.getItem(LOCALSTORAGE_NAME));
     },
     logout() {
-      return APIService.logout().then(() => {
-        this.user = null;
-        router.push("/login");
+      this.user = null;
+      APIService.logout().then(response => {
+        window.location.href = response.data;
+      })
+      .catch(e => {
+        console.log("Error fetching logout URI: " + e)
       });
     }
   }

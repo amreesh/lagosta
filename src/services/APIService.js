@@ -36,10 +36,7 @@ export default {
   },
   logout() {
     localStorage.removeItem(LOCALSTORAGE_NAME);
-    simpleClient.get("/auth/logout"); // should NOT be GET!
-    return new Promise(function(resolve) {
-      resolve("Logged out.");
-    });
+    return simpleClient.get("/auth/logout"); // should NOT be GET!
   },
   getCAs() {
     return apiClient.get("/api/v1/cas");
