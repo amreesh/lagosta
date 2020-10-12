@@ -91,6 +91,7 @@ export default {
     this.returnUrl = this.$route.query.returnUrl || "/";
     if (this.$route.query.token) {
       this.form.token = this.$route.query.token;
+      this.form.id = this.$route.query.id;
       this.login();
     }
     // this.githubAuth = new ClientOAuth2({
@@ -116,7 +117,8 @@ export default {
 
       const self = this;
       this.loading = true;
-      APIService.login(this.form.token).then(success => {
+
+      APIService.login(this.form.id, this.form.token).then(success => {
         if (success) {
           this.$emit("auth-event");
           router.push(this.returnUrl);

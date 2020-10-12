@@ -15,16 +15,16 @@ export default {
       .then(() => true)
       .catch(() => false);
   },
-  login(token) {
+  login(id, token) {
     apiClient.defaults.headers["Authorization"] = "Bearer " + token;
     return apiClient
       .get("/api/v1/authorized")
-      .then(scopes => {
+      .then(() => {
         localStorage.setItem(
           LOCALSTORAGE_NAME,
           JSON.stringify({
-            authdata: window.btoa(token),
-            scopes: scopes.data.toString()
+            authdata: token,
+            id: window.atob(id)
           })
         );
         return true;

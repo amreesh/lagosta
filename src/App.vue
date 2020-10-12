@@ -10,7 +10,7 @@
               </div>
             </router-link>
           </el-col>
-          <el-col :span="14">&nbsp;</el-col>
+          <el-col :span="14"><span v-if="user">Welcome {{ this.user.id }}</span><span v-else>&nbsp;</span></el-col>
           <el-col :span="6">
             <div class="toolbar">
               <el-select v-model="$i18n.locale" placeholder="Language" size="small">
@@ -35,7 +35,7 @@
         <el-row>
           <el-col :span="12">
             &copy; {{ new Date().getFullYear() }} Stichting NLnet Labs
-            <span v-if="krillVersion !== ''" :title="krillStarted"> - Krill v{{ krillVersion }} [user: {{this.user.scopes}}]</span
+            <span v-if="krillVersion !== ''" :title="krillStarted"> - Krill v{{ krillVersion }}</span
             >
 
             <el-tooltip
